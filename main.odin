@@ -11,6 +11,8 @@ main :: proc() {
     for !rl.WindowShouldClose() {
         rl.BeginDrawing()
         rl.ClearBackground(rl.BLUE)
+
+        // handle x mvmt
         if rl.IsKeyDown(.LEFT) {
             player_vel.x = -400
         } else if rl.IsKeyDown(.RIGHT) {
@@ -18,7 +20,21 @@ main :: proc() {
         } else {
             player_vel.x = 0
         }
+
+        // handle y mvmt
+        player_vel.y += 2000 * rl.GetFrameTime()
+        if rl.IsKeyPressed(.SPACE) {
+            player_vel.y = -600
+        }
+
+        // update position
         player_pos += player_vel * rl.GetFrameTime()
+
+        // handle floor
+        if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
+            player_pos.y = f32(rl.GetScreenHeight()) - 64
+        }
+
         rl.DrawRectangleV(player_pos, {64, 64}, rl.GREEN)
         rl.EndDrawing()
     }
