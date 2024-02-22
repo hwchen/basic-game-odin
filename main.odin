@@ -6,8 +6,11 @@ import rl "vendor:raylib"
 main :: proc() {
     context.logger = log.create_console_logger(.Info)
     rl.InitWindow(1280, 720, "My First Game")
+
     player_pos := rl.Vector2{640, 320}
     player_vel: rl.Vector2
+    player_grounded: bool
+
     for !rl.WindowShouldClose() {
         rl.BeginDrawing()
         rl.ClearBackground(rl.BLUE)
@@ -23,8 +26,9 @@ main :: proc() {
 
         // handle y mvmt
         player_vel.y += 2000 * rl.GetFrameTime()
-        if rl.IsKeyPressed(.SPACE) {
+        if rl.IsKeyPressed(.SPACE) && player_grounded {
             player_vel.y = -600
+            player_grounded = false
         }
 
         // update position
@@ -33,6 +37,7 @@ main :: proc() {
         // handle floor
         if player_pos.y > f32(rl.GetScreenHeight()) - 64 {
             player_pos.y = f32(rl.GetScreenHeight()) - 64
+            player_grounded = true
         }
 
         rl.DrawRectangleV(player_pos, {64, 64}, rl.GREEN)
