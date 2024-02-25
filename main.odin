@@ -68,12 +68,14 @@ Platform :: struct {
 on_platform :: proc(platforms: []Platform, player_pos: rl.Vector2) -> (f32, bool) {
     for p in platforms {
         is_y_bound := player_pos.y > p.y - 64 // account for player height
-        //is_x1_bound := player_pos.x > p.x1 - 64 // account for player width
-        //is_x2_bound := player_pos.x < p.x2 + 64 // account for player width
-        is_x1_bound := false
-        is_x2_bound := false
+        is_x1_bound := player_pos.x > p.x1 - 64 // account for player width
+        is_x2_bound := player_pos.x < p.x2 + 64 // account for player width
+        is_x_bound := is_x1_bound && is_x2_bound
         log.info("on_platform is_y_bound", is_y_bound)
-        if is_y_bound || is_x1_bound || is_x2_bound {
+        log.info("on_platform is_x1_bound", is_x1_bound)
+        log.info("on_platform is_x2_bound", is_x2_bound)
+        log.info("on_platform is_x_bound", is_x_bound)
+        if is_y_bound && is_x_bound {
             return p.y, true
         }
     }
