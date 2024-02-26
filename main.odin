@@ -20,6 +20,8 @@ main :: proc() {
         rl.ClearBackground(rl.BLUE)
         for p in platforms {
             rl.DrawRectangleV({((p.x2 - p.x1) / 2) + p.x1, p.y}, {p.x2 - p.x1, 16}, rl.RED)
+            rl.DrawPixelV({p.x1, p.y}, rl.ORANGE)
+            rl.DrawPixelV({p.x2, p.y}, rl.ORANGE)
         }
 
         // handle x mvmt
@@ -68,8 +70,8 @@ Platform :: struct {
 on_platform :: proc(platforms: []Platform, player_pos: rl.Vector2) -> (f32, bool) {
     for p in platforms {
         is_y_bound := player_pos.y > p.y - 64 // account for player height
-        is_x1_bound := player_pos.x > p.x1 - 64 // account for player width
-        is_x2_bound := player_pos.x < p.x2 + 64 // account for player width
+        is_x1_bound := player_pos.x > p.x1 - 64 // account for player width, leading edge
+        is_x2_bound := player_pos.x < p.x2 // trailing edge, don't need to account for player width
         is_x_bound := is_x1_bound && is_x2_bound
         log.info("on_platform is_y_bound", is_y_bound)
         log.info("on_platform is_x1_bound", is_x1_bound)
