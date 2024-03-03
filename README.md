@@ -1,5 +1,7 @@
 Does not use the flake, as it doesn't seem to work great with nix/nixos (because of raylib).
 
+http://zylinski.se/posts/gamedev-for-beginners-using-odin-and-raylib-2/
+
 Raylib gives an error that xlib cannot be found.
 
 ```
