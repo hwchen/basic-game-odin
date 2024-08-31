@@ -9,6 +9,7 @@ main :: proc() {
     platforms := []Platform{Platform{x1 = 320, x2 = 420, y = f32(window_height) - 32}}
 
     context.logger = log.create_console_logger(.Info)
+    rl.SetTargetFPS(60)
     rl.InitWindow(1280, window_height, "My First Game")
 
     player_pos := rl.Vector2{640, f32(window_height) / 2}
